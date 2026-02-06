@@ -1,0 +1,43 @@
+---
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("shorts");
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+// ★ 正しい取り出し方
+const { Content } = await post.render();
+const { data } = post;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{data.title}</title>
+    <meta name="description" content={data.description} />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+
+  <body>
+    <main style="max-width: 720px; margin: 40px auto; padding: 0 24px;">
+      <h1>{data.title}</h1>
+      <p>{data.description}</p>
+
+      <hr />
+
+      <!-- ★ Markdown 本文（これが正解） -->
+      <Content />
+
+      <p style="margin-top: 40px;">
+        <a href="/shorts">← Back to Shorts</a>
+      </p>
+    </main>
+  </body>
+</html>

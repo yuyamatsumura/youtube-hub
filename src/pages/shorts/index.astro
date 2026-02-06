@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("shorts");
+
+// 新しい順に並び替え
+const sortedPosts = posts.sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime()
+);
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>YouTube Shorts | Japan Explained</title>
+    <meta name="viewport" content="width=device-width" />
+  </head>
+
+  <body>
+    <main style="max-width: 720px; margin: 60px auto; padding: 0 24px;">
+      <h1>YouTube Shorts</h1>
+
+      <p>
+        Short videos and simple explanations
+        about Japan for global audiences.
+      </p>
+
+      <ul>
+        {sortedPosts.map((post) => (
+          <li style="margin-bottom: 24px;">
+            <a href={`/shorts/${post.slug}`}>
+              <strong>{post.data.title}</strong>
+            </a>
+            <br />
+            <small>
+              {post.data.publishedAt.toLocaleDateString("en-US")}
+            </small>
+            <br />
+            <span>{post.data.description}</span>
+          </li>
+        ))}
+      </ul>
+
+      <p>
+        <a href="/">← Back to Home</a>
+      </p>
+    </main>
+  </body>
+</html>
