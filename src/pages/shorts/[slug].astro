@@ -29,12 +29,12 @@ const { data } = post;
       max-width: 760px;
       margin: 100px auto;
       padding: 0 24px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.8;
       color: #222;
     ">
 
-      <h1 style="font-size:36px; margin-bottom:10px;">
+      <h1 style="font-size:36px; margin-bottom:20px;">
         {data.title}
       </h1>
 
@@ -42,11 +42,40 @@ const { data } = post;
         {data.publishedAt.toLocaleDateString("en-US")}
       </div>
 
+      {data.youtubeId && (
+        <div style="margin-bottom:40px;">
+          <iframe
+            width="100%"
+            height="400"
+            src={`https://www.youtube.com/embed/${data.youtubeId}`}
+            title="YouTube Short"
+            frameborder="0"
+            allowfullscreen
+            style="border-radius:8px;"
+          ></iframe>
+        </div>
+      )}
+
       <article style="font-size:18px;">
         <Content />
       </article>
 
-      <div style="margin-top:60px;">
+      <div style="
+        margin-top:60px;
+        padding:30px;
+        background:#f3f3f3;
+        border-radius:8px;
+      ">
+        <strong>Want to explore more about Japan?</strong>
+        <p style="margin:10px 0;">
+          Discover more short guides and upcoming experiences.
+        </p>
+        <a href="/" style="font-weight:600; text-decoration:none; color:#111;">
+          Back to Home →
+        </a>
+      </div>
+
+      <div style="margin-top:40px;">
         <a href="/shorts" style="text-decoration:none; color:#111;">
           ← Back to Shorts
         </a>
